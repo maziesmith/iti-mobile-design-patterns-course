@@ -1,12 +1,11 @@
-package com.example.mostafa.therealfoursquare;
+package com.example.mostafa.therealfoursquare.model;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.mostafa.therealfoursquare.model.Place;
+import com.example.mostafa.therealfoursquare.PlacesObserver;
 
 import java.util.ArrayList;
 import java.util.List;

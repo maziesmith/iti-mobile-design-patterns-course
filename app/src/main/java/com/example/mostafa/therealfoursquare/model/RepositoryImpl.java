@@ -1,8 +1,9 @@
-package com.example.mostafa.therealfoursquare;
+package com.example.mostafa.therealfoursquare.model;
 
 import android.location.Location;
 
-import com.example.mostafa.therealfoursquare.model.Place;
+import com.example.mostafa.therealfoursquare.PlacesObserver;
+import com.example.mostafa.therealfoursquare.PlacesSubject;
 
 import java.util.ArrayList;
 import java.util.List;
