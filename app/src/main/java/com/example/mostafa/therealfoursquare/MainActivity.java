@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 updateUI(places);
             }
         });
+
+//        viewmodel.getPlacesStream().observeF
     }
 
     void updateUI(List<Place> places) {
