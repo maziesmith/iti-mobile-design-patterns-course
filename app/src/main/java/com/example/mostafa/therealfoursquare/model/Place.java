@@ -5,4 +5,18 @@ package com.example.mostafa.therealfoursquare.model;
  */
 
 public class Place {
+    public int id;
+
+    public Place(){
+
+    }
+
+    public Place(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return id == ((Place)obj).id;
+    }
 }

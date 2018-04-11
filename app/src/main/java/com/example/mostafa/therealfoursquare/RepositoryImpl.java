@@ -6,6 +6,10 @@ import com.example.mostafa.therealfoursquare.model.Place;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by mostafa on 4/10/18.
@@ -23,7 +27,6 @@ public class RepositoryImpl implements Repository, PlacesSubject {
 
     @Override
     public void getPlacesFromNetworkIfAvailable(Location location) {
-
 
         //Check Connection
         boolean isConnectionAvailable = true;
@@ -44,6 +47,7 @@ public class RepositoryImpl implements Repository, PlacesSubject {
                 }
             });
         }
+
     }
 
     List<PlacesObserver> observers = new ArrayList<>();

@@ -1,4 +1,4 @@
-package com.example.mostafa.therealfoursquare;
+package com.example.mostafa.therealfoursquare.nearbyplaces;
 
 import android.annotation.SuppressLint;
 import android.location.Location;
@@ -12,9 +12,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.mostafa.therealfoursquare.LocationProvider;
+import com.example.mostafa.therealfoursquare.LocationProviderImpl;
+import com.example.mostafa.therealfoursquare.PlacesObserver;
+import com.example.mostafa.therealfoursquare.R;
+import com.example.mostafa.therealfoursquare.Repository;
 import com.example.mostafa.therealfoursquare.model.Place;
+import com.jakewharton.rxrelay2.BehaviorRelay;
+import com.jakewharton.rxrelay2.Relay;
 
 import org.w3c.dom.Text;
 
@@ -22,49 +30,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-public class MainActivity extends AppCompatActivity implements PlacesObserver {
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+
+
+public class MainActivity extends AppCompatActivity implements Contract.PlacesView {
+
+    static int counter = 0;
 
     TextView textView;
 
     // TODO: Use Dagger to inject dependencies
-//    LocationProvider locationProvider;
-//    NetworkApi networkApi;
-
-    Repository repository;
+    Contract.PlacesPresenter presenter;
 
     public static final String TAG = "FourSquare";
+    private Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        presenter = new PlacesPresenterImpl(this);
         textView = findViewById(R.id.textView);
-
-        LocationProvider locationProvider = new LocationProviderImpl();
-        Location lastKonwLocation = locationProvider.getFakeLastKnowLocation();
-        getPlaces(lastKonwLocation);
-
     }
 
-    private void getPlaces(Location lastKonwLocation) {
-        NetworkApi networkApi = new NetworkApiImpl();
-        LocalDataSource localDataSource = new LocalDataSource();
-        Repository repository = new RepositoryImpl(networkApi, localDataSource);
-
-        repository.getPlacesFromNetworkIfAvailable(lastKonwLocation);
-        repository.registerObserver(this);
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.refreshData();
     }
 
-    void updateUI(List<Place> places) {
+    public void updateUI(List<Place> places) {
         //Update UI
         textView.setText("Success");
     }
 
-    @Override
-    public void onPlacesAvailable(List<Place> places) {
-        updateUI(places);
-    }
+
 }
